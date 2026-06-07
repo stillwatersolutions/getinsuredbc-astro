@@ -1,0 +1,51 @@
+---
+// Ported from HowItWorks.tsx
+import CompanyCarousel from './CompanyCarousel.astro';
+const steps = [
+  { title: 'Take assessment', description: 'Our life insurance assessment will help us recommend the right partner for you (not all life insurance works for everyone!)' },
+  { title: "We'll find your match", description: 'Based on your answers, we will determine if you qualify and match with one of our partners.' },
+  { title: 'Get the perfect policy', description: 'We will connect you with a partner that we know will be able to serve you best and get you the coverage you need!' },
+];
+---
+<section id="how-it-works" class="py-20 px-4 relative overflow-hidden">
+  <div class="absolute inset-0 bg-gradient-to-br from-blue-100 via-purple-50 to-orange-50 opacity-60"></div>
+  <div class="absolute top-0 left-1/4 w-[500px] md:w-96 h-[500px] md:h-96 bg-blue-400/30 rounded-full blur-3xl"></div>
+  <div class="absolute bottom-0 right-1/4 w-[500px] md:w-96 h-[500px] md:h-96 bg-purple-400/30 rounded-full blur-3xl"></div>
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] md:w-96 h-[500px] md:h-96 bg-pink-300/20 rounded-full blur-3xl"></div>
+
+  <div class="container mx-auto max-w-7xl relative z-10">
+    <div class="text-center mb-16 animate-fade-in space-y-4">
+      <div class="inline-block">
+        <span class="text-xs font-semibold uppercase tracking-wider text-primary">TRUSTED PARTNERS</span>
+      </div>
+      <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">So, how does it work?</h2>
+      <p class="text-base md:text-lg text-foreground/70 max-w-3xl mx-auto leading-relaxed">
+        Fill out the form or take our assessment and we will automatically search our database of certified life insurance partners to find the perfect option for your situation.
+      </p>
+    </div>
+
+    <div class="relative grid grid-cols-1 md:grid-cols-[1.3fr_1fr_1fr] gap-8 md:gap-12 mb-12 items-start">
+      <svg class="hidden md:block absolute top-6 md:top-8 left-0 w-full h-24 pointer-events-none z-0" viewBox="0 0 1000 80" preserveAspectRatio="none" fill="none">
+        <path d="M 120 30 C 250 65, 350 65, 480 40 C 610 15, 700 15, 830 40" stroke="currentColor" stroke-width="2.5" stroke-dasharray="8 6" class="text-foreground/15" fill="none" />
+      </svg>
+
+      {steps.map((step, index) => (
+        <div class={`relative z-10 text-center space-y-3 ${index === 1 ? 'md:mt-12' : index === 2 ? 'md:mt-4' : ''}`}>
+          <div class="text-7xl md:text-8xl font-bold text-foreground/85 leading-none select-none">{index + 1}</div>
+          <h3 class="text-xl font-bold text-foreground">{step.title}</h3>
+          <p class="text-foreground/60 leading-relaxed text-base">{step.description}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="text-center">
+      <button type="button" data-open-quiz class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold transition-all duration-300 bg-accent-terracotta hover:bg-accent-terracotta-dark text-white rounded-full px-8 h-12">
+        See How It Works
+      </button>
+    </div>
+
+    <div class="mt-16">
+      <CompanyCarousel />
+    </div>
+  </div>
+</section>

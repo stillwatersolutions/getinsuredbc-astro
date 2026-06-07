@@ -1,55 +1,150 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/* ---- Design tokens ported from the live getinsuredbc.com site ---- */
-@theme {
-  --color-background: hsl(40 20% 98%);
-  --color-foreground: hsl(0 0% 15%);
-  --color-primary: hsl(213 90% 11%);
-  --color-primary-light: hsl(213 70% 20%);
-  --color-primary-dark: hsl(213 95% 7%);
-  --color-secondary: hsl(40 25% 95%);
-  --color-muted: hsl(30 20% 90%);
-  --color-muted-foreground: hsl(0 0% 40%);
-  --color-peach: hsl(25 75% 88%);
-  --color-coral: hsl(5 75% 90%);
-  --color-skyblue: hsl(185 45% 82%);
-  --color-sage: hsl(163 22% 60%);
-  --color-terracotta: hsl(15 55% 55%);
+/* Design system ported verbatim from the original Lovable project. All colors HSL. */
 
-  --font-display: "Fraunces", Georgia, serif;
-  --font-sans: "Outfit", system-ui, sans-serif;
+@layer base {
+  :root {
+    --background: 40 20% 98%;
+    --foreground: 0 0% 15%;
+
+    --card: 40 20% 98%;
+    --card-foreground: 0 0% 15%;
+
+    --popover: 40 20% 98%;
+    --popover-foreground: 0 0% 15%;
+
+    --primary: 213 90% 11%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 213 70% 20%;
+    --primary-dark: 213 95% 7%;
+
+    --secondary: 40 25% 95%;
+    --secondary-foreground: 0 0% 15%;
+
+    --muted: 30 20% 90%;
+    --muted-foreground: 0 0% 40%;
+
+    --accent: 0 0% 20%;
+    --accent-foreground: 0 0% 100%;
+    --accent-light: 205 45% 88%;
+    --accent-light-dark: 205 35% 35%;
+    --accent-peach: 25 75% 88%;
+    --accent-peach-dark: 25 60% 40%;
+    --accent-coral: 5 75% 90%;
+    --accent-coral-dark: 5 50% 45%;
+    --accent-blue: 185 45% 82%;
+    --accent-blue-dark: 185 40% 35%;
+    --accent-sage: 163 22% 60%;
+    --accent-sage-dark: 163 30% 35%;
+    --accent-terracotta: 15 55% 55%;
+    --accent-terracotta-dark: 15 45% 40%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 158 64% 52%;
+    --success-light: 158 64% 92%;
+
+    --border: 30 20% 90%;
+    --input: 30 20% 90%;
+    --ring: 213 90% 11%;
+
+    --radius: 1rem;
+
+    --gradient-primary: linear-gradient(135deg, hsl(213 90% 11%), hsl(213 95% 7%));
+    --gradient-soft: linear-gradient(180deg, hsl(30 40% 96%), hsl(0 0% 100%));
+    --gradient-hero: linear-gradient(135deg, hsl(210 80% 95%), hsl(0 0% 100%));
+
+    --highlighter: 213 90% 11%;
+    --highlighter-foreground: 0 0% 100%;
+
+    --shadow-soft: 0 2px 12px -2px hsl(0 0% 0% / 0.08);
+    --shadow-medium: 0 4px 24px -4px hsl(0 0% 0% / 0.12);
+    --shadow-accent: 0 8px 32px -6px hsl(0 0% 0% / 0.16);
+    --shadow-glow: 0 0 40px hsl(213 90% 11% / 0.2);
+
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
 }
 
-html {
-  font-family: var(--font-sans);
-  background-color: var(--color-background);
-  color: var(--color-foreground);
-  scroll-behavior: smooth;
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Fraunces', 'Georgia', serif;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+
+  h1 {
+    text-wrap: balance;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
-h1, h2, h3, h4 {
-  font-family: var(--font-display);
-  font-weight: 900;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
+@layer utilities {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  @keyframes wave {
+    0%, 100% { transform: translateY(0); }
+    25% { transform: translateY(-10px); }
+    75% { transform: translateY(10px); }
+  }
+  .animate-wave { animation: wave 1.3s ease-in-out infinite; }
+
+  @keyframes slide-up-fade {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  .slide-up-fade {
+    animation: slide-up-fade 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: var(--delay, 0s);
+  }
 }
 
-a { color: inherit; }
-
-/* Long-form typography for blog posts */
-.prose-content {
+/* ---- Blog content typography (markdown + Supabase HTML) ---- */
+.prose-content,
+.blog-content {
   max-width: 70ch;
-  font-size: 1.075rem;
-  line-height: 1.75;
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  color: hsl(var(--foreground) / 0.9);
 }
-.prose-content h2 { font-size: 1.9rem; margin: 2.25rem 0 0.75rem; }
-.prose-content h3 { font-size: 1.4rem; margin: 1.75rem 0 0.5rem; }
-.prose-content p { margin: 0 0 1.1rem; }
-.prose-content ul { margin: 0 0 1.1rem 1.25rem; list-style: disc; }
-.prose-content ol { margin: 0 0 1.1rem 1.25rem; list-style: decimal; }
-.prose-content li { margin: 0.35rem 0; }
-.prose-content a { color: var(--color-primary); text-decoration: underline; text-underline-offset: 2px; }
-.prose-content blockquote {
-  border-left: 3px solid var(--color-sage);
-  padding-left: 1rem; margin: 1.25rem 0; color: var(--color-muted-foreground); font-style: italic;
+.prose-content h2, .blog-content h2 { font-family: 'Fraunces', Georgia, serif; color: hsl(var(--foreground)); font-weight: 700; font-size: 1.75rem; margin: 3rem 0 1.25rem; line-height: 1.3; }
+.prose-content h3, .blog-content h3 { font-family: 'Fraunces', Georgia, serif; color: hsl(var(--foreground)); font-weight: 700; font-size: 1.375rem; margin: 2rem 0 1rem; line-height: 1.4; }
+.prose-content h4, .blog-content h4 { color: hsl(var(--foreground)); font-weight: 600; margin: 1.75rem 0 0.75rem; }
+.prose-content p, .blog-content p { margin-bottom: 1.75rem; }
+.prose-content ul, .blog-content ul { list-style: disc; margin: 1.5rem 0; padding-left: 1.75rem; }
+.prose-content ol, .blog-content ol { list-style: decimal; margin: 1.5rem 0; padding-left: 1.75rem; }
+.prose-content li, .blog-content li { margin-bottom: 0.75rem; line-height: 1.7; }
+.prose-content strong, .blog-content strong { color: hsl(var(--foreground)); font-weight: 600; }
+.prose-content a, .blog-content a { color: hsl(var(--primary)); text-decoration: underline; text-underline-offset: 2px; font-weight: 500; }
+.prose-content blockquote, .blog-content blockquote { border-left: 4px solid hsl(var(--primary)); background: hsl(var(--accent-light) / 0.2); padding: 1rem 1.5rem; margin: 2rem 0; font-style: italic; }
+
+@media (max-width: 768px) {
+  .prose-content h2, .blog-content h2 { font-size: 1.5rem; margin-top: 2.5rem; }
+  .prose-content h3, .blog-content h3 { font-size: 1.25rem; margin-top: 1.75rem; }
+  .prose-content p, .blog-content p { font-size: 1rem; line-height: 1.75; }
 }

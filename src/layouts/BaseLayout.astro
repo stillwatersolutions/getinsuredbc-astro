@@ -27,6 +27,7 @@ const { title, description, image, type } = Astro.props;
       <slot />
     </main>
     <Footer />
+    <slot name="after-footer" />
 
     <!-- Interactive quiz island (loaded once). Any element with data-open-quiz opens it. -->
     <Quiz client:idle />

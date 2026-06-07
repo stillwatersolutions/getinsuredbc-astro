@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { products } from '../data/products';
+
+export function getStaticPaths() {
+  return products.map((p) => ({ params: { insurance: p.slug }, props: { p } }));
+}
+
+const { p } = Astro.props;
+
+const Check = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>';
+
+// Service schema for AEO/SEO
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: p.name,
+  provider: { '@type': 'InsuranceAgency', name: 'GetInsuredBC', url: 'https://getinsuredbc.com' },
+  areaServed: { '@type': 'AdministrativeArea', name: 'British Columbia, Canada' },
+  description: p.metaDescription,
+};
+---
+<BaseLayout title={p.title} description={p.metaDescription}>
+  <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} is:inline slot="head" />
+
+  <!-- Hero -->
+  <section class="mx-auto max-w-5xl px-5 pt-20 pb-12 text-center">
+    <h1 class="text-4xl md:text-6xl text-primary">{p.name}</h1>
+    <p class="mt-5 text-lg text-muted-foreground max-w-2xl mx-auto">{p.subtitle}</p>
+    <button type="button" data-open-quiz class="mt-8 rounded-full bg-primary px-7 py-3.5 font-semibold text-white transition-transform hover:scale-105">
+      Get your free quote
+    </button>
+  </section>
+
+  <!-- What is it -->
+  <section class="bg-secondary/50 py-16">
+    <div class="mx-auto max-w-3xl px-5">
+      <h2 class="text-3xl md:text-4xl text-primary">What is {p.name.toLowerCase()}?</h2>
+      <div class="mt-6 space-y-4 text-lg text-muted-foreground">
+        {p.what.map((para) => <p>{para}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits -->
+  <section class="py-16">
+    <div class="mx-auto max-w-4xl px-5">
+      <h2 class="text-3xl md:text-4xl text-primary mb-8">Key benefits</h2>
+      <div class="grid gap-5 md:grid-cols-2">
+        {p.benefits.map((b) => (
+          <div class="flex gap-4 rounded-2xl bg-secondary/50 p-6">
+            <span class="mt-0.5 shrink-0 text-terracotta" set:html={Check} />
+            <div>
+              <h3 class="text-lg text-primary font-bold">{b.title}</h3>
+              <p class="mt-1 text-muted-foreground">{b.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Who needs it -->
+  <section class="bg-secondary/50 py-16">
+    <div class="mx-auto max-w-3xl px-5">
+      <h2 class="text-3xl md:text-4xl text-primary">Who needs {p.name.toLowerCase()}?</h2>
+      <p class="mt-5 text-lg text-muted-foreground">{p.whoIntro}</p>
+      <ul class="mt-5 space-y-3">
+        {p.who.map((item) => (
+          <li class="flex gap-3 text-lg text-muted-foreground">
+            <span class="mt-1 shrink-0 text-terracotta" set:html={Check} />
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-20 text-center">
+    <div class="mx-auto max-w-3xl px-5">
+      <h2 class="text-3xl md:text-4xl text-primary">Ready to protect what matters?</h2>
+      <p class="mt-4 text-lg text-muted-foreground max-w-xl mx-auto">
+        Get a personalized recommendation in minutes. We'll help you find the right coverage for your needs and budget.
+      </p>
+      <button type="button" data-open-quiz class="mt-8 rounded-full bg-primary px-7 py-3.5 font-semibold text-white transition-transform hover:scale-105">
+        Start your free quote
+      </button>
+    </div>
+  </section>
+</BaseLayout>

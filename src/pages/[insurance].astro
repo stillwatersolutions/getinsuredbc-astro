@@ -49,7 +49,7 @@ const serviceSchema = {
       <div class="grid gap-5 md:grid-cols-2">
         {p.benefits.map((b) => (
           <div class="flex gap-4 rounded-2xl bg-secondary/50 p-6">
-            <span class="mt-0.5 shrink-0 text-terracotta" set:html={Check} />
+            <span class="mt-0.5 shrink-0 text-accent-terracotta" set:html={Check} />
             <div>
               <h3 class="text-lg text-primary font-bold">{b.title}</h3>
               <p class="mt-1 text-muted-foreground">{b.description}</p>
@@ -68,7 +68,7 @@ const serviceSchema = {
       <ul class="mt-5 space-y-3">
         {p.who.map((item) => (
           <li class="flex gap-3 text-lg text-muted-foreground">
-            <span class="mt-1 shrink-0 text-terracotta" set:html={Check} />
+            <span class="mt-1 shrink-0 text-accent-terracotta" set:html={Check} />
             <span>{item}</span>
           </li>
         ))}

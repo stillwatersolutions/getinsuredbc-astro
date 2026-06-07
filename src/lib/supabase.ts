@@ -58,3 +58,33 @@ export async function getSupabasePosts(): Promise<SupabasePost[]> {
     category: Array.isArray(p.blog_categories) ? p.blog_categories[0] ?? null : p.blog_categories ?? null,
   }));
 }
+
+export interface Review {
+  id: string;
+  reviewer_name: string;
+  reviewer_role?: string;
+  rating: number;
+  headline?: string;
+  body: string;
+  tag?: string;
+  avatar_url?: string;
+  display_order: number;
+}
+
+/** Published reviews for the homepage rail (via the manage-reviews edge function). */
+export async function getReviews(): Promise<Review[]> {
+  if (!client) return [];
+  try {
+    const { data, error } = await client.functions.invoke('manage-reviews', {
+      body: { operation: 'list-published' },
+    });
+    if (error) {
+      console.warn('[supabase] reviews fetch failed:', error.message);
+      return [];
+    }
+    return (data?.reviews ?? []) as Review[];
+  } catch (e: any) {
+    console.warn('[supabase] reviews fetch threw:', e?.message);
+    return [];
+  }
+}

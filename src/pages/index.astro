@@ -1,80 +1,61 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-
-const steps = [
-  { n: '1', title: 'Take the assessment', body: 'Answer a few quick questions about your situation — no jargon, no pressure.' },
-  { n: '2', title: "We'll find your match", body: 'We compare options across providers to find coverage that actually fits.' },
-  { n: '3', title: 'Get the perfect policy', body: 'Lock in protection for your family, often for less than weekly takeout.' },
-];
-
-const values = [
-  { title: 'Affordable coverage', color: 'bg-peach', body: 'Protection that fits real BC budgets.' },
-  { title: 'Simplicity', color: 'bg-coral', body: 'Plain language, no confusing fine print.' },
-  { title: 'Flexibility', color: 'bg-skyblue', body: 'Options that adapt to your life stage.' },
-  { title: 'Trust', color: 'bg-sage/50', body: 'A licensed BC broker on your side.' },
-];
+import Hero from '../components/home/Hero.astro';
+import Benefits from '../components/home/Benefits.astro';
+import HowItWorks from '../components/home/HowItWorks.astro';
+import ReviewsRail from '../components/home/ReviewsRail.astro';
+import WhyLifeInsurance from '../components/home/WhyLifeInsurance.astro';
+import FaqHome from '../components/home/FaqHome.astro';
+import FinalCTA from '../components/home/FinalCTA.astro';
 ---
 <BaseLayout>
-  <!-- Hero -->
-  <section class="mx-auto max-w-6xl px-5 pt-20 pb-16 text-center">
-    <p class="text-sm font-semibold uppercase tracking-wide text-terracotta">Life insurance made simple</p>
-    <h1 class="mt-4 text-4xl md:text-6xl text-primary max-w-3xl mx-auto">
-      Helping BC folks like you find the best coverage for your situation
-    </h1>
-    <p class="mt-6 text-lg text-muted-foreground max-w-xl mx-auto">
-      Take our quick assessment and discover the right protection for your family — in minutes.
-    </p>
-    <div class="mt-8 flex justify-center gap-3">
-      <button type="button" data-open-quiz class="rounded-full bg-primary px-7 py-3.5 font-semibold text-white transition-transform hover:scale-105">
-        Get My Coverage Recommendation
-      </button>
-    </div>
-  </section>
+  <Hero />
+  <Benefits />
+  <HowItWorks />
+  <ReviewsRail />
+  <WhyLifeInsurance />
+  <FaqHome />
+  <FinalCTA />
 
-  <!-- Values -->
-  <section class="mx-auto max-w-6xl px-5 py-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-    {values.map((v) => (
-      <div class={`rounded-2xl ${v.color} p-6`}>
-        <h3 class="text-xl text-primary">{v.title}</h3>
-        <p class="mt-2 text-sm text-primary/80">{v.body}</p>
+  <!-- Scroll-trigger zone: opens the quiz as the visitor scrolls into it (ported from ScrollTriggerZone) -->
+  <div slot="after-footer">
+    <div id="scroll-trigger" class="relative h-[150vh] bg-accent flex flex-col items-center justify-start pt-24">
+      <div class="text-center space-y-4 animate-pulse">
+        <p class="text-accent-foreground/70 text-lg font-medium">Keep scrolling to start the quiz</p>
+        <svg class="h-6 w-6 text-accent-foreground mx-auto animate-bounce" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
       </div>
-    ))}
-  </section>
-
-  <!-- How it works -->
-  <section class="mx-auto max-w-6xl px-5 py-16">
-    <h2 class="text-3xl md:text-4xl text-primary text-center">So, how does it work?</h2>
-    <div class="mt-12 grid gap-8 md:grid-cols-3">
-      {steps.map((s) => (
-        <div class="text-center">
-          <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary text-xl font-black text-white">
-            {s.n}
-          </div>
-          <h3 class="mt-5 text-xl text-primary">{s.title}</h3>
-          <p class="mt-2 text-sm text-muted-foreground">{s.body}</p>
-        </div>
-      ))}
     </div>
-  </section>
+  </div>
 
-  <!-- Assessment CTA: opens the interactive quiz island -->
-  <section id="assessment" class="mx-auto max-w-3xl px-5 py-16 text-center scroll-mt-24">
-    <div class="rounded-3xl bg-secondary border border-muted p-10">
-      <h2 class="text-3xl text-primary">Ready to find your coverage?</h2>
-      <p class="mt-3 text-muted-foreground">
-        Take the 2-minute assessment and get a personalized recommendation — plus a PDF summary
-        of your options and any coverage gaps.
-      </p>
-      <button type="button" data-open-quiz class="mt-6 inline-block rounded-full bg-primary px-7 py-3.5 font-semibold text-white transition-transform hover:scale-105">
-        Start the assessment
-      </button>
-    </div>
-  </section>
+  <!-- dotLottie web component for hero + final CTA animations -->
+  <script type="module" src="https://unpkg.com/@lottiefiles/dotlottie-wc/dist/dotlottie-wc.js" is:inline></script>
 
-  <!-- FAQ teaser -->
-  <section class="mx-auto max-w-3xl px-5 py-12 text-center">
-    <h2 class="text-3xl text-primary">Have questions? We've got answers.</h2>
-    <p class="mt-3 text-muted-foreground">Read the most common questions about life insurance in BC.</p>
-    <a href="/faq" class="mt-5 inline-block font-semibold text-primary underline underline-offset-4">Visit the FAQ &rarr;</a>
-  </section>
+  <script is:inline>
+    // Scroll-trigger: open quiz when ~85% into the zone
+    (function () {
+      var zone = document.getElementById('scroll-trigger');
+      if (!zone) return;
+      var fired = false;
+      function onScroll() {
+        var rect = zone.getBoundingClientRect();
+        var progress = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / rect.height));
+        if (progress > 0.85 && !fired) { fired = true; window.dispatchEvent(new CustomEvent('open-quiz')); }
+        if (progress < 0.2) fired = false;
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+    })();
+
+    // Magnetic hover effect (ported from the framer-motion MagneticButton)
+    (function () {
+      document.querySelectorAll('[data-magnetic]').forEach(function (el) {
+        el.addEventListener('mousemove', function (e) {
+          var r = el.getBoundingClientRect();
+          var dx = (e.clientX - (r.left + r.width / 2)) * 0.15;
+          var dy = (e.clientY - (r.top + r.height / 2)) * 0.15;
+          el.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+        });
+        el.addEventListener('mouseleave', function () { el.style.transform = 'translate(0,0)'; });
+      });
+    })();
+  </script>
 </BaseLayout>

@@ -1,0 +1,61 @@
+---
+// Ported from ReviewsRail.tsx — build-time fetch + CSS vertical marquee
+import { getReviews } from '../../lib/supabase';
+const reviews = await getReviews();
+const star = '<svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>';
+---
+<section class="py-20 px-4 bg-secondary/30 overflow-hidden">
+  <div class="container mx-auto max-w-7xl">
+    <div class="text-center mb-12 animate-fade-in">
+      <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">What families say about us</h2>
+      <p class="text-muted-foreground text-lg max-w-2xl mx-auto">Real stories from real families we've helped protect.</p>
+    </div>
+
+    {reviews.length === 0 ? (
+      <p class="text-center text-muted-foreground text-lg">Reviews coming soon.</p>
+    ) : (
+      <div class="reviews-viewport relative h-[320px] sm:h-[700px] overflow-hidden">
+        <div class="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-secondary/30 to-transparent z-10 pointer-events-none"></div>
+        <div class="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-secondary/30 to-transparent z-10 pointer-events-none"></div>
+
+        <div class="reviews-track">
+          {[0, 1].map((dup) => (
+            <div class={`grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 ${dup === 1 ? 'mt-4 md:mt-6' : ''}`}>
+              {reviews.map((review) => (
+                <div class="relative bg-card rounded-2xl p-6 shadow-lg border border-border/30">
+                  {review.tag && <span class="absolute top-4 right-4 text-xs rounded-md bg-secondary px-2 py-0.5 text-secondary-foreground">{review.tag}</span>}
+                  <div class="flex gap-0.5 mb-3">
+                    {[1, 2, 3, 4, 5].map((s) => (
+                      <span class={s <= review.rating ? 'text-yellow-400' : 'text-muted-foreground/20'} set:html={star} />
+                    ))}
+                  </div>
+                  {review.headline && <h4 class="font-semibold text-foreground mb-2 line-clamp-1">{review.headline}</h4>}
+                  <p class="text-muted-foreground text-sm leading-relaxed line-clamp-4 mb-4">"{review.body}"</p>
+                  <div class="flex items-center gap-3 mt-auto pt-2 border-t border-border/50">
+                    {review.avatar_url ? (
+                      <img src={review.avatar_url} alt={review.reviewer_name} class="h-10 w-10 rounded-full object-cover" />
+                    ) : (
+                      <div class="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
+                        <span class="text-primary font-semibold text-sm">{review.reviewer_name.charAt(0).toUpperCase()}</span>
+                      </div>
+                    )}
+                    <div>
+                      <p class="font-medium text-sm text-foreground">{review.reviewer_name}</p>
+                      {review.reviewer_role && <p class="text-xs text-muted-foreground">{review.reviewer_role}</p>}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+  </div>
+
+  <style>
+    @keyframes reviews-scroll { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
+    .reviews-track { animation: reviews-scroll 40s linear infinite; will-change: transform; }
+    @media (max-width: 640px) { .reviews-track { animation-duration: 80s; } }
+  </style>
+</section>

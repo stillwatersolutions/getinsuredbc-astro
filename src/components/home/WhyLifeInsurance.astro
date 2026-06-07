@@ -1,0 +1,43 @@
+---
+// Ported from WhyLifeInsurance.tsx
+const reasons = [
+  { title: 'Security', description: "Provides peace of mind knowing your family's future is safeguarded no matter what.", icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>' },
+  { title: 'Stability', description: 'Helps keep your household finances steady during difficult times.', icon: '<path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/>' },
+  { title: 'Legacy', description: 'Allows you to leave a lasting financial foundation for the next generation.', icon: '<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>' },
+];
+---
+<section class="py-12 md:py-20 px-4 bg-background">
+  <div class="container mx-auto max-w-7xl">
+    <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+      <div class="order-2 lg:order-1">
+        <div class="rounded-lg overflow-hidden h-full flex items-center justify-center min-h-[400px]">
+          <img src="/assets/family-insurance-photo.png" alt="Happy family enjoying time together - life insurance protection" class="w-full h-full object-cover rounded-lg" />
+        </div>
+      </div>
+
+      <div class="order-1 lg:order-2 space-y-6">
+        <div class="inline-block">
+          <span class="text-xs font-semibold uppercase tracking-wider text-primary">More For Less</span>
+        </div>
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">Why do people get life insurance?</h2>
+        <p class="text-base md:text-lg text-muted-foreground leading-relaxed">
+          Life insurance is a way to make sure that your family and dependents don't suffer financially when you pass. It can be used to pay for a funeral, pay off debts (including your mortgage), pay for your children's education and help your family maintain their standard of living when they no longer have <em>you</em> to support them.
+        </p>
+
+        <div class="space-y-4 pt-2">
+          {reasons.map((r) => (
+            <div class="flex gap-4 items-start">
+              <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                <svg class="h-5 w-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={r.icon} />
+              </div>
+              <div>
+                <h3 class="text-lg font-bold text-foreground mb-1">{r.title}</h3>
+                <p class="text-muted-foreground leading-relaxed text-base">{r.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

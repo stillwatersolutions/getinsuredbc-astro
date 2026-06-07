@@ -1,0 +1,52 @@
+---
+// Ported from FAQ.tsx (native <details> accordion)
+const faqs = [
+  { question: 'When do I need life insurance?', answer: "If you're planning on getting married, having kids, or buying a home, you should probably start to think about it. You will want to make sure that your family is provided for, and can pay off your debts after you're gone. Getting life insurance while you are young and healthy can result in lower premiums, as you pose a significantly lower risk." },
+  { question: 'Does my age affect my cost?', answer: "Yes, your age can affect your premiums. Your insurance company is going to evaluate the risk that you pose to the company and place you in a 'risk grouping'. Usually, the younger you are, the healthier you are, the lower the risk you pose, the lower the premiums that you have to pay. Keep in mind that age is only one factor, and the insurer will also look at things like your gender, medical history, physical condition and if you smoke." },
+  { question: 'How much do I need?', answer: "There is no one-size-fits-all answer. The amount of insurance you will need is a highly personal decision. A life insurance agent will look at your assets, debts, personal situation, financial goals and your family's needs so they can make recommendations tailored to you. Remember, your needs might change throughout your life, so it's a good idea to review your policy at milestone events such as getting married or having a baby." },
+  { question: 'Why do people get life insurance?', answer: "Life insurance is a way to make sure that your family and dependants don't suffer financially when you die. Life insurance can be used to pay for a funeral, pay off debts (including your mortgage), pay for your children's education and help your family maintain their standard of living when they no longer have you to support them." },
+];
+const colors = [
+  { bg: 'bg-accent-light', text: 'text-accent-light-dark' },
+  { bg: 'bg-accent-peach', text: 'text-accent-peach-dark' },
+  { bg: 'bg-accent-coral', text: 'text-accent-coral-dark' },
+  { bg: 'bg-accent-blue', text: 'text-accent-blue-dark' },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.question, acceptedAnswer: { '@type': 'Answer', text: f.answer } })),
+};
+---
+<section id="faq" class="py-24 px-4 relative overflow-hidden">
+  <div class="absolute inset-0 bg-gradient-to-tr from-emerald-100 via-teal-50 to-cyan-50 opacity-60"></div>
+  <div class="absolute top-1/4 right-1/4 w-[600px] md:w-[500px] h-[600px] md:h-[500px] bg-emerald-300/25 rounded-full blur-3xl"></div>
+  <div class="absolute bottom-1/4 left-1/3 w-[500px] md:w-[400px] h-[500px] md:h-[400px] bg-teal-400/20 rounded-full blur-3xl"></div>
+  <div class="absolute top-0 left-0 w-80 md:w-64 h-80 md:h-64 bg-cyan-300/15 rounded-full blur-3xl"></div>
+
+  <div class="container mx-auto max-w-4xl relative z-10">
+    <div class="text-center mb-16 space-y-4">
+      <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold">Have questions? We've got answers.</h2>
+    </div>
+
+    <div class="space-y-4">
+      {faqs.map((faq, index) => {
+        const c = colors[index % colors.length];
+        return (
+          <details class={`${c.bg} rounded-2xl border-0 overflow-hidden group`}>
+            <summary class="px-8 py-6 text-left cursor-pointer list-none flex items-center justify-between">
+              <h3 class={`font-bold text-lg ${c.text} pr-4`}>{faq.question}</h3>
+              <svg class={`h-5 w-5 shrink-0 ${c.text} transition-transform group-open:rotate-180`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+            </summary>
+            <div class="px-8 pb-6 pt-0">
+              <p class="text-foreground/70 leading-relaxed">{faq.answer}</p>
+            </div>
+          </details>
+        );
+      })}
+    </div>
+  </div>
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} is:inline />
+</section>

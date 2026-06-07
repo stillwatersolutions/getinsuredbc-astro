@@ -1,0 +1,39 @@
+---
+// Ported from CompanyCarousel.tsx — CSS marquee version
+const companies = [
+  { name: 'BMO Insurance', logo: 'https://cdn.brandfetch.io/investipro.ca/w/512/h/154/logo?c=1idHOZORDPRIY4PxXqb' },
+  { name: 'Desjardins', logo: 'https://cdn.brandfetch.io/desjardins.com/w/512/h/110/logo?c=1idHOZORDPRIY4PxXqb' },
+  { name: 'Empire Life', logo: 'https://cdn.brandfetch.io/empire.ca/w/512/h/89/logo?c=1idHOZORDPRIY4PxXqb' },
+  { name: 'RBC', logo: 'https://cdn.brandfetch.io/rbcbank.com/w/441/h/512/logo?c=1idHOZORDPRIY4PxXqb' },
+  { name: 'Foresters Financial', logo: 'https://cdn.brandfetch.io/foresters.com/w/512/h/197/logo?c=1idHOZORDPRIY4PxXqb' },
+  { name: 'IA Financial', logo: 'https://cdn.brandfetch.io/ia.ca/w/512/h/278/logo?c=1idHOZORDPRIY4PxXqb' },
+  { name: 'Humania', logo: 'https://cdn.brandfetch.io/humania.ca/w/512/h/60/logo?c=1idHOZORDPRIY4PxXqb' },
+  { name: 'Canada Life', logo: 'https://cdn.brandfetch.io/canadalife.com/w/512/h/177/logo?c=1idHOZORDPRIY4PxXqb' },
+  { name: 'Ivari', logo: 'https://cdn.brandfetch.io/ivari.ca/w/88/h/40/logo?c=1idHOZORDPRIY4PxXqb' },
+  { name: 'Sun Life', logo: 'https://cdn.brandfetch.io/sunlife.co.id/w/512/h/125/logo?c=1idHOZORDPRIY4PxXqb' },
+  { name: 'UV Insurance', logo: '/assets/uv-insurance.png' },
+  { name: 'Manulife', logo: '/assets/manulife-logo.svg' },
+  { name: 'Equitable Life', logo: '/assets/equitable-life-logo.png' },
+  { name: 'Beneva', logo: '/assets/beneva-logo.png' },
+];
+const doubled = [...companies, ...companies];
+---
+<section class="py-8 bg-transparent">
+  <div class="container mx-auto px-4">
+    <div class="relative overflow-hidden">
+      <div class="company-track flex will-change-transform">
+        {doubled.map((c) => (
+          <div class="flex-shrink-0 w-[200px] mx-6 flex items-center justify-center">
+            <img src={c.logo} alt={c.name} loading="lazy" class="max-w-full max-h-[80px] w-auto h-auto object-contain opacity-60 hover:opacity-100 transition-opacity duration-300" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes company-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .company-track { width: max-content; animation: company-marquee 60s linear infinite; }
+  .company-track:hover { animation-play-state: paused; }
+</style>

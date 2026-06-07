@@ -131,7 +131,7 @@ export default function Quiz() {
   return (
     <div className="fixed inset-0 z-[100] animate-[fadeIn_.2s_ease]">
       {/* backdrop */}
-      <div className="absolute inset-0 bg-gradient-to-br from-skyblue/40 via-secondary to-peach/40" />
+      <div className="absolute inset-0 bg-gradient-to-br from-accent-blue/40 via-secondary to-accent-peach/40" />
       <div className="relative h-[100dvh] md:h-[760px] md:max-w-2xl md:mx-auto md:mt-12 flex flex-col bg-background md:rounded-2xl md:shadow-2xl overflow-hidden">
         {/* header */}
         <div className="border-b border-muted">
@@ -262,7 +262,7 @@ function SuccessView({ firstName, outcomeKey, outcome, onClose }: { firstName: s
   return (
     <div className="max-w-md mx-auto space-y-6 py-2 animate-[fadeIn_.2s_ease]">
       <div className="text-center space-y-3">
-        <div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-sage/30 text-sage-dark"><span className="text-green-600"><Icon.Check /></span></div>
+        <div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-accent-sage/30 text-accent-sage-dark"><span className="text-green-600"><Icon.Check /></span></div>
         <h3 className="font-display text-2xl font-black text-primary">Thanks {firstName}, you're all set!</h3>
         <p className="text-sm text-muted-foreground">Your benefits assessment has been submitted. Here's what happens next:</p>
       </div>
