@@ -3,6 +3,7 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Schema from '../components/Schema.astro';
+import Quiz from '../components/Quiz.tsx';
 import '../styles/global.css';
 
 interface Props {
@@ -26,5 +27,14 @@ const { title, description, image, type } = Astro.props;
       <slot />
     </main>
     <Footer />
+
+    <!-- Interactive quiz island (loaded once). Any element with data-open-quiz opens it. -->
+    <Quiz client:idle />
+    <script is:inline>
+      document.addEventListener('click', (e) => {
+        const t = e.target.closest('[data-open-quiz]');
+        if (t) { e.preventDefault(); window.dispatchEvent(new CustomEvent('open-quiz')); }
+      });
+    </script>
   </body>
 </html>

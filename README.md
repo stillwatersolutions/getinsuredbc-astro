@@ -60,11 +60,23 @@ Your content in Markdown.
 - FAQ questions/answers: `src/pages/faq.astro`
 - Homepage sections: `src/pages/index.astro`
 
-## Still to port from the Lovable build
+## Done
 
-- The **assessment quiz** → add as a React island in the `#assessment` section of `src/pages/index.astro` (keeps writing to your existing Supabase backend).
-- **Wistia** hero video, **Calendly** booking widget, **Meta Pixel** — drop in as islands/script tags.
-- Replace the **placeholder phone number** in `src/consts.ts` and add real `og-default.png` + `favicon.ico` to `public/`.
+- **Quiz** — full assessment as a React island (`src/components/Quiz.tsx`), wired to Supabase
+  (`quiz_questions/answers/outcomes/rules`), writes leads to `quiz_submissions`, fires the
+  `send-to-hubspot` + `send-quiz-pdf-email` edge functions, tracks Meta Pixel events, and shows
+  the outcome + Calendly + PDF. Any button with `data-open-quiz` opens it.
+- **Product pages** — `/term-life-insurance`, `/whole-life-insurance`, `/critical-illness-insurance`,
+  `/disability-insurance` (data in `src/data/products.ts`, one template at `src/pages/[insurance].astro`),
+  each with `Service` schema.
+- **Legal** — `/privacy-policy`, `/terms-of-service`.
+- **Meta Pixel** restored site-wide.
+
+## Polish still worth doing
+
+- **Wistia** hero video on the homepage (drop the embed into `src/pages/index.astro`).
+- Replace the **placeholder phone** in `src/consts.ts`; add real `og-default.png` + `favicon.ico` to `public/`.
+- Optional: tighten homepage hero/testimonials to match the old design pixel-for-pixel.
 
 ## Deploy
 

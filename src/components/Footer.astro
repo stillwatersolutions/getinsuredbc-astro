@@ -1,14 +1,24 @@
 ---
 import { NAV, SITE } from '../consts';
+import { products } from '../data/products';
 const year = new Date().getFullYear();
 ---
 <footer class="bg-primary text-white/90 mt-24">
-  <div class="mx-auto max-w-6xl px-5 py-14 grid gap-10 md:grid-cols-3">
+  <div class="mx-auto max-w-6xl px-5 py-14 grid gap-10 md:grid-cols-4">
     <div>
       <p class="font-display text-2xl font-black text-white">{SITE.title}</p>
       <p class="mt-3 text-sm text-white/70 max-w-xs">
         Helping one British Columbian at a time find the right coverage for their situation.
       </p>
+    </div>
+
+    <div>
+      <p class="text-sm font-semibold uppercase tracking-wide text-white/60">Coverage</p>
+      <ul class="mt-3 space-y-2 text-sm">
+        {products.map((p) => (
+          <li><a href={`/${p.slug}`} class="hover:underline">{p.name}</a></li>
+        ))}
+      </ul>
     </div>
 
     <div>
@@ -34,8 +44,8 @@ const year = new Date().getFullYear();
     <div class="mx-auto max-w-6xl px-5 py-5 flex flex-col sm:flex-row justify-between gap-3 text-xs text-white/50">
       <span>&copy; {year} {SITE.title}. All rights reserved.</span>
       <span class="flex gap-4">
-        <a href="/privacy" class="hover:underline">Privacy Policy</a>
-        <a href="/terms" class="hover:underline">Terms of Service</a>
+        <a href="/privacy-policy" class="hover:underline">Privacy Policy</a>
+        <a href="/terms-of-service" class="hover:underline">Terms of Service</a>
       </span>
     </div>
   </div>
