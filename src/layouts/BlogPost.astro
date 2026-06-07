@@ -1,0 +1,55 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { SITE } from '../consts';
+
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  author: string;
+  tags: string[];
+}
+const { title, description, pubDate, updatedDate, author, tags } = Astro.props;
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' });
+
+// Article structured data for rich results + AI citation
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description,
+  datePublished: pubDate.toISOString(),
+  dateModified: (updatedDate ?? pubDate).toISOString(),
+  author: { '@type': 'Organization', name: author },
+  publisher: { '@type': 'Organization', name: SITE.title, url: SITE.url },
+  mainEntityOfPage: new URL(Astro.url.pathname, Astro.site).toString(),
+};
+---
+<BaseLayout title={title} description={description} type="article">
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} is:inline slot="head" />
+
+  <article class="mx-auto max-w-3xl px-5 py-16">
+    <a href="/blog" class="text-sm text-muted-foreground hover:text-primary">&larr; All articles</a>
+
+    <header class="mt-6 mb-10">
+      <div class="flex flex-wrap gap-2 mb-4">
+        {tags.map((t) => (
+          <span class="rounded-full bg-skyblue/40 px-3 py-1 text-xs font-medium text-primary">{t}</span>
+        ))}
+      </div>
+      <h1 class="text-4xl md:text-5xl text-primary">{title}</h1>
+      <p class="mt-4 text-lg text-muted-foreground">{description}</p>
+      <p class="mt-4 text-sm text-muted-foreground">
+        By {author} &middot; <time datetime={pubDate.toISOString()}>{fmt(pubDate)}</time>
+        {updatedDate && <span> &middot; Updated {fmt(updatedDate)}</span>}
+      </p>
+    </header>
+
+    <div class="prose-content">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>

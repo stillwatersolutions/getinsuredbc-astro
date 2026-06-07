@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../consts';
+---
+<BaseLayout title="Contact" description="Get in touch with GetInsuredBC, a licensed life insurance broker in British Columbia.">
+  <section class="mx-auto max-w-2xl px-5 py-16">
+    <h1 class="text-4xl md:text-5xl text-primary">Let's talk</h1>
+    <p class="mt-4 text-lg text-muted-foreground">
+      Questions about coverage? Reach out — a licensed BC broker will help, no pressure.
+    </p>
+    <div class="mt-10 space-y-4 text-lg">
+      <p><span class="font-semibold text-primary">Email:</span> <a class="underline underline-offset-4" href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+      <p><span class="font-semibold text-primary">Office:</span> {SITE.address.street}, {SITE.address.city}, {SITE.address.region}</p>
+    </div>
+    <p class="mt-10 text-sm text-muted-foreground">
+      Note: a Calendly booking widget can mount here as an island, matching the current site.
+    </p>
+  </section>
+</BaseLayout>

@@ -1,0 +1,20 @@
+# GetInsuredBC
+
+> GetInsuredBC is a licensed life insurance broker in British Columbia, Canada. We help BC families find affordable life, critical illness, disability, and funeral insurance through a simple online assessment and one-on-one guidance from a licensed broker.
+
+## About
+- Licensed insurance broker serving all of British Columbia
+- Based in Vancouver, BC
+- Specializes in: life insurance, critical illness insurance, disability insurance, funeral insurance
+- Approach: plain-language assessment, multi-provider comparison, no-pressure advice
+
+## Key pages
+- [Home](https://getinsuredbc.com/): Overview and coverage assessment
+- [How It Works](https://getinsuredbc.com/how-it-works): The 3-step process
+- [FAQ](https://getinsuredbc.com/faq): When you need life insurance, how cost is affected by age, how much coverage to get, and why people buy
+- [Blog](https://getinsuredbc.com/blog): Guides on life insurance in BC
+- [Contact](https://getinsuredbc.com/contact): Reach a licensed BC broker
+
+## Contact
+- Email: joel@getinsuredBC.com
+- Location: 329 Howe St, Vancouver, BC, Canada

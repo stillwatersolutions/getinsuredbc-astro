@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const steps = [
+  { n: '1', title: 'Take the assessment', body: 'Answer a few quick questions about your age, family, and goals. Takes about two minutes.' },
+  { n: '2', title: "We'll find your match", body: 'We compare coverage options across multiple providers to find what fits your situation and budget.' },
+  { n: '3', title: 'Get the perfect policy', body: 'Review your recommendation with a licensed BC broker and lock in protection for your family.' },
+];
+---
+<BaseLayout
+  title="How It Works"
+  description="How GetInsuredBC helps you find the right life insurance in three simple steps."
+>
+  <section class="mx-auto max-w-4xl px-5 py-16">
+    <h1 class="text-4xl md:text-5xl text-primary text-center">So, how does it work?</h1>
+    <p class="mt-4 text-lg text-muted-foreground text-center max-w-xl mx-auto">
+      Finding the right coverage shouldn't be complicated. Here's the whole process.
+    </p>
+    <div class="mt-14 space-y-10">
+      {steps.map((s) => (
+        <div class="flex gap-6 items-start">
+          <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-primary text-xl font-black text-white">{s.n}</div>
+          <div>
+            <h2 class="text-2xl text-primary">{s.title}</h2>
+            <p class="mt-2 text-muted-foreground">{s.body}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+    <div class="mt-14 text-center">
+      <a href="/#assessment" class="inline-block rounded-full bg-primary px-7 py-3.5 font-semibold text-white">Start the assessment</a>
+    </div>
+  </section>
+</BaseLayout>

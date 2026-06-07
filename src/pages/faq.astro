@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Edit these freely. Each becomes both visible content AND FAQPage schema,
+// which is what gets you pulled into Google rich results and AI answers.
+const faqs = [
+  {
+    q: 'When do I need life insurance?',
+    a: 'Most people in BC should consider life insurance as soon as someone depends on their income — a partner, children, a mortgage, or a co-signed loan. The earlier you start, the lower your premiums, because rates rise with age and health changes.',
+  },
+  {
+    q: 'Does my age affect my cost?',
+    a: 'Yes. Age is one of the biggest factors in life insurance pricing. A policy bought in your 30s typically costs far less per month than the same coverage bought in your 50s, and locking in a term policy early holds that rate for the length of the term.',
+  },
+  {
+    q: 'How much coverage do I need?',
+    a: 'A common starting point is 10 to 15 times your annual income, adjusted for your mortgage, debts, childcare, and future goals like education. Our assessment walks you through your specific situation rather than guessing with a generic number.',
+  },
+  {
+    q: 'Why do people get life insurance?',
+    a: 'The core reason is to replace income and cover debts so the people you love are not left with a financial burden. In BC that often means covering a mortgage, final expenses, and day-to-day living costs so your family can stay in their home and maintain their lifestyle.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+<BaseLayout
+  title="Life Insurance FAQ"
+  description="Common questions about life insurance in British Columbia — when you need it, how much it costs, and how much coverage to get."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} is:inline slot="head" />
+
+  <section class="mx-auto max-w-3xl px-5 py-16">
+    <h1 class="text-4xl md:text-5xl text-primary">Have questions? We've got answers.</h1>
+    <p class="mt-4 text-lg text-muted-foreground">
+      Straight answers about life insurance in British Columbia.
+    </p>
+
+    <div class="mt-10 space-y-4">
+      {faqs.map((f) => (
+        <details class="group rounded-2xl border border-muted bg-secondary/50 p-5">
+          <summary class="cursor-pointer list-none font-display text-lg font-bold text-primary flex justify-between items-center">
+            {f.q}
+            <span class="ml-4 text-terracotta transition-transform group-open:rotate-45">+</span>
+          </summary>
+          <p class="mt-3 text-muted-foreground">{f.a}</p>
+        </details>
+      ))}
+    </div>
+
+    <div class="mt-12 rounded-3xl bg-primary p-8 text-center text-white">
+      <h2 class="text-2xl text-white">Still have questions?</h2>
+      <p class="mt-2 text-white/80">Talk to a licensed BC broker — no pressure.</p>
+      <a href="/contact" class="mt-5 inline-block rounded-full bg-white px-6 py-3 font-semibold text-primary">Get Help</a>
+    </div>
+  </section>
+</BaseLayout>

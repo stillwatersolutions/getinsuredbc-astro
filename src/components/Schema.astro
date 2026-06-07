@@ -1,0 +1,32 @@
+---
+// Site-wide structured data so search + AI engines understand the business.
+import { SITE } from '../consts';
+
+const org = {
+  '@context': 'https://schema.org',
+  '@type': 'InsuranceAgency',
+  name: SITE.title,
+  description: SITE.description,
+  url: SITE.url,
+  email: SITE.email,
+  telephone: SITE.phone,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: SITE.address.street,
+    addressLocality: SITE.address.city,
+    addressRegion: SITE.address.region,
+    addressCountry: SITE.address.country,
+  },
+  areaServed: {
+    '@type': 'AdministrativeArea',
+    name: SITE.areaServed,
+  },
+  knowsAbout: [
+    'Life insurance',
+    'Critical illness insurance',
+    'Disability insurance',
+    'Funeral insurance',
+  ],
+};
+---
+<script type="application/ld+json" set:html={JSON.stringify(org)} is:inline />
